@@ -1,4 +1,4 @@
-# Vanilla JavaScript - Form Validation Project
+# Form Validation Project
 
 In this project, I meticulously crafted a user registration form, employing HTML and CSS for its structure and styling. The form's functionality is further enhanced with JavaScript, which I used to implement robust form validation. This project is exclusively focused on JavaScript, showcasing its versatility and power in web development.
 
