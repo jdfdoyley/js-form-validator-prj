@@ -21,10 +21,14 @@ function showSuccess(input) {
 }
 
 // Check email is valid
-function isValidEmail(email) {
+function checkEmail(input) {
   const re =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  if (!re.test(input.value.trim().toLowerCase())) {
+    showError(input, 'Email format is invalid.');
+  } else {
+    showSuccess(input);
+  }
 }
 
 // Check required fields
@@ -35,8 +39,24 @@ function checkRequired(inputs) {
     } else {
       showSuccess(input);
     }
-    console.log(input.value);
   });
+}
+
+// Check input length
+function checkLength(input, min, max) {
+  if (input.value.length < min) {
+    showError(
+      input,
+      `${getFieldName(input)} must be at least ${min} characters.`
+    );
+  } else if (input.value.length > max) {
+    showError(
+      input,
+      `${getFieldName(input)} must less than ${max} characters.`
+    );
+  } else {
+    showSuccess(input);
+  }
 }
 
 // Get field name function
@@ -48,31 +68,8 @@ function getFieldName(input) {
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  // if (username.value === '') {
-  //   showError(username, 'Username is required');
-  // } else {
-  //   showSuccess(username);
-  // }
-
-  // if (email.value === '') {
-  //   showError(email, 'Email is required');
-  // } else if (!isValidEmail(email.value)) {
-  //   showError(email, 'Email is not valid');
-  // } else {
-  //   showSuccess(email);
-  // }
-
-  // if (password.value === '') {
-  //   showError(password, 'Password is required');
-  // } else {
-  //   showSuccess(password);
-  // }
-
-  // if (password2.value === '') {
-  //   showError(password2, 'Password 2 is required');
-  // } else {
-  //   showSuccess(password2);
-  // }
-
   checkRequired([username, email, password, password2]);
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
+  checkEmail(email);
 });
